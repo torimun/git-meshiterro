@@ -1,4 +1,12 @@
 <!--この部分は詳細画面-->
+
+<!--以下の部分はユーザー自体の詳細-->
+<div>
+  <h3><%= @user.name %></h3>
+  <%= image_tag @user.get_profile_image(100,100) %>
+</div>
+
+<!--以下の部分はユーザーの投稿-->
 <div>
   <%= image_tag @post_image.get_image %>
   <p>ショップ名：<%= @post_image.shop_name %></p>

@@ -5,7 +5,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
     #1:N の「1」側にあたるモデルに、has_many を記載する必要がある
-    has_many :post_iamges, dependent: :destroy
+    has_many :post_images, dependent: :destroy
+
+    has_one_attached :profile_image
 
     def get_profile_image
     unless profile_image.attached?
