@@ -1,5 +1,17 @@
 <!-- この部分は画像登録フォーム画面  -->
 <h1>画像投稿フォーム</h1>
+
+<!--エラー内容を確認できるようにする-->
+<% if @post_image.errors.any? %>
+  <%= @post_image.errors.count %>件のエラーが発生しました
+  <ul>
+    <!--full_messageと記述するとエラー内容を出力できる。-->
+    <% @post_image.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
   <%= form_with model: @post_image do |f| %>
     <h4>画像</h4>
       <!-- 画像アップロードフィールドは、以下のコードで実装 -->

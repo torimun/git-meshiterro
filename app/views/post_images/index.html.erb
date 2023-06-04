@@ -1,31 +1,6 @@
 <!-- この部分は一覧画面  -->
-<!-- @post_images変数内から1つずつ取り出して、post_image変数へ格納 -->
-<% @post_images.each do |post_image| %>
-<div>
-  <%= link_to post_image_path(post_image.id) do %>
-    <%= image_tag post_image.get_image %>
-  <% end %>
-  <!--以下のコードで、Userモデルに記述しているget_profile_imageメソッドが使えるようにする-->
-  <p>投稿ユーザー画像：<%= image_tag post_image.user.get_profile_image(100,100) %></p>
-  <p>ショップ名：<%= post_image.shop_name %></p>
-  <p>説明：<%= post_image.caption %></p>
-  <p>ユーザーネーム：<%= post_image.user.name %></p>
-  <p><%= link_to "#{post_image.post_comments.count} コメント", post_image_path(post_image.id) %></p>
-</div>
-<% end %>
+<!--以下のコードは部分テンプレート使用-->
+<%= render 'list', post_images: @post_images %>
 
 <!--「含まれるとき／含まれないとき」で、表示と機能を分けています-->
 <!--リンクのaタグのメソッドを、条件によって変えています-->
-<% if @post_image.favorited_by?(current_user) %>
-    <p>
-      <%= link_to post_image_favorites_path(@post_image), method: :delete do %>
-        ♥<%= @post_image.favorites.count %> いいね
-      <% end %>
-    </p>
-    <% else %>
-    <p>
-      <%= link_to post_image_favorites_path(@post_image), method: :post do %>
-        ♡<%= @post_image.favorites.count %> いいね
-      <% end %>
-    </p>
-  <% end %>

@@ -1,0 +1,30 @@
+<!-- @post_images変数内から1つずつ取り出して、post_image変数へ格納 -->
+<!--部分テンプレートファイル内でインスタンス変数を利用時,変更があると部分テンプレートも変えないと行けない-->
+<!--なので、ローカル変数にするので@を外しておく。-->
+<% post_images.each do |post_image| %>
+<div>
+  <%= link_to post_image_path(post_image.id) do %>
+    <%= image_tag post_image.get_image %>
+  <% end %>
+  <!--以下のコードで、Userモデルに記述しているget_profile_imageメソッドが使えるようにする-->
+  <p>投稿ユーザー画像：<%= image_tag post_image.user.get_profile_image(100,100) %></p>
+  <p>ショップ名：<%= post_image.shop_name %></p>
+  <p>説明：<%= post_image.caption %></p>
+  <p>ユーザーネーム：<%= post_image.user.name %></p>
+  <p><%= link_to "#{post_image.post_comments.count} コメント", post_image_path(post_image.id) %></p>
+</div>
+<% if post_image.favorited_by?(current_user) %>
+  <p>
+    <%= link_to post_image_favorites_path(post_image), method: :delete do %>
+      ♥<%= post_image.favorites.count %> いいね
+    <% end %>
+  </p>
+  <% else %>
+  <p>
+    <%= link_to post_image_favorites_path(post_image), method: :post do %>
+      ♡<%= post_image.favorites.count %> いいね
+    <% end %>
+  </p>
+<% end %>
+<% end %>
+<%= paginate post_images %>
